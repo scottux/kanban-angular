@@ -1,0 +1,15 @@
+<div ng-repeat="(statusName, status) in models.statuses" class="column">
+    <p class="status-title">{{statusName}} <small class="status-wip-limit" ng-if="status.wipLimit !== null">Limit <input type="number" ng-model="status.wipLimit" min="0" class="input-digit" /></small></p>
+    <ul dnd-list="status.stories" dnd-drop="updateStatusOnDrop(item, status, statusName)">
+        <li class="story-card" ng-repeat="story in status.stories"
+            dnd-draggable="story"
+            dnd-moved="status.stories.splice($index, 1)"
+            dnd-effect-allowed="move"
+            dnd-selected="models.selected = story"
+            ng-class="{'selected': models.selected === story}">
+            <h2 class="story-title">{{story.title}}</h2>
+            <p class="story-secondary">{{story.status}}</p>
+            <p class="story-primary">{{story.description}}</p>
+        </li>
+    </ul>
+</div>
